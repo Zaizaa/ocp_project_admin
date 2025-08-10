@@ -32,6 +32,16 @@ const navItems: NavItem[] = [
     name: "Dashboard",
     subItems: [{ name: "Ecommerce", path: "/", pro: false }],
   },
+   {
+    icon: <UserCircleIcon />,
+    name: "Gestion Équipe",
+    path: "/equipe",
+  },
+  {
+    icon: <UserCircleIcon />,
+    name: "Gestion Utilisateur",
+    path: "/user",
+  },
   {
     icon: <CalenderIcon />,
     name: "Calendar",
