@@ -12,89 +12,76 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 });
 
 export default function MonthlySalesChart() {
+  const data = [12, 8, 15, 6, 10, 9]; // adapte ces valeurs selon tes stats réelles
+  // Trouver min et max
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+
+  // Définir les couleurs : min = vert foncé, max = rouge, autres = verts
+  const colors = data.map((val) =>
+    val === max
+      ? "#228B22" // rouge pour le max
+      : val === min
+      ? "#ADFF2F" // vert foncé pour le min
+      : "#98FB98" // vert clair pour les autres
+  );
+
   const options: ApexOptions = {
-    colors: ["#465fff"],
+    colors,
     chart: {
       fontFamily: "Outfit, sans-serif",
       type: "bar",
-      height: 180,
-      toolbar: {
-        show: false,
-      },
+      height: 220,
+      toolbar: { show: false },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "39%",
-        borderRadius: 5,
+        columnWidth: "45%",
+        borderRadius: 6,
         borderRadiusApplication: "end",
+        distributed: true, // chaque barre sa couleur
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      show: true,
-      width: 4,
-      colors: ["transparent"],
-    },
+    dataLabels: { enabled: false },
+    stroke: { show: true, width: 4, colors: ["#fff"] },
     xaxis: {
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        "Site A",
+        "Usine B",
+        "Station C",
+        "Dépôt D",
+        "Site E",
+        "Plateforme F",
       ],
-      axisBorder: {
-        show: false,
-      },
-      axisTicks: {
-        show: false,
-      },
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      labels: { style: { colors: "#059669", fontWeight: 600 } },
     },
-    legend: {
-      show: true,
-      position: "top",
-      horizontalAlign: "left",
-      fontFamily: "Outfit",
-    },
+    legend: { show: false },
     yaxis: {
       title: {
-        text: undefined,
+        offsetX: -10,
+        style: { color: "#059669", fontWeight: 600 },
       },
+      labels: { style: { colors: "#059669" } },
     },
     grid: {
-      yaxis: {
-        lines: {
-          show: true,
-        },
-      },
+      yaxis: { lines: { show: true } }, // ✅ just show lines
+      borderColor: "#bbf7d0",           // ✅ set color here
     },
-    fill: {
-      opacity: 1,
-    },
-
+    fill: { opacity: 1 },
     tooltip: {
-      x: {
-        show: false,
-      },
-      y: {
-        formatter: (val: number) => `${val}`,
-      },
+      x: { show: true },
+      y: { formatter: (val: number) => `${val} incidents` },
+      theme: "light",
     },
   };
+
   const series = [
     {
-      name: "Sales",
-      data: [168, 385, 201, 298, 187, 195, 291, 110, 215, 390, 280, 112],
+      name: "Incidents",
+      data,
     },
   ];
   const [isOpen, setIsOpen] = useState(false);
@@ -108,12 +95,11 @@ export default function MonthlySalesChart() {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
-      <div className="flex items-center justify-between">
+    <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6 h-full flex flex-col">
+      <div className="flex items-center justify-between mb-2">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-          Monthly Declarations
+          Incidents par installation industrielle
         </h3>
-
         <div className="relative inline-block">
           <button onClick={toggleDropdown} className="dropdown-toggle">
             <MoreDotIcon className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" />
@@ -125,27 +111,27 @@ export default function MonthlySalesChart() {
           >
             <DropdownItem
               onItemClick={closeDropdown}
-              className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+              className="flex w-full font-normal text-left text-green-700 rounded-lg hover:bg-green-100 hover:text-green-900 dark:text-green-300 dark:hover:bg-green-900/20 dark:hover:text-green-200"
             >
-              View More
+              Voir plus
             </DropdownItem>
             <DropdownItem
               onItemClick={closeDropdown}
-              className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+              className="flex w-full font-normal text-left text-green-700 rounded-lg hover:bg-green-100 hover:text-green-900 dark:text-green-300 dark:hover:bg-green-900/20 dark:hover:text-green-200"
             >
-              Delete
+              Supprimer
             </DropdownItem>
           </Dropdown>
         </div>
       </div>
 
-      <div className="max-w-full overflow-x-auto custom-scrollbar">
-        <div className="-ml-5 min-w-[650px] xl:min-w-full pl-2">
+      <div className="flex-1 flex items-center">
+        <div className="w-full">
           <ReactApexChart
             options={options}
             series={series}
             type="bar"
-            height={180}
+            height={220}
           />
         </div>
       </div>

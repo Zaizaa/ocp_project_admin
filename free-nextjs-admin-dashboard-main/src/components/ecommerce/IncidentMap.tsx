@@ -2,6 +2,7 @@
 import Image from "next/image";
 
 import CountryMap from "./CountryMap";
+import OcpSafiImageMap from "./OcpSafiImageMap";
 import { useState } from "react";
 import { MoreDotIcon } from "@/icons";
 import { Dropdown } from "../ui/dropdown/Dropdown";
@@ -23,7 +24,7 @@ export default function DemographicCard() {
       <div className="flex justify-between">
         <div>
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white/90">
-            Customers Demographic
+            Declarations Demographic
           </h3>
           <p className="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
             Number of customer based on country
@@ -59,10 +60,11 @@ export default function DemographicCard() {
           id="mapOne"
           className="mapOne map-btn -mx-4 -my-6 h-[212px] w-[252px] 2xsm:w-[307px] xsm:w-[358px] sm:-mx-6 md:w-[668px] lg:w-[634px] xl:w-[393px] 2xl:w-[554px]"
         >
-          <CountryMap />
+          <OcpSafiImageMap />
         </div>
       </div>
 
+      {/*countries footer*/}
       <div className="space-y-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -94,6 +96,7 @@ export default function DemographicCard() {
             </p>
           </div>
         </div>
+
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
