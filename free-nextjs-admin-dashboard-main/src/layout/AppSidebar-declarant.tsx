@@ -32,16 +32,8 @@ const navItems: NavItem[] = [
     name: "suivi des tickets",
     path: "/ticket",
   },
-  {
-    icon: <CalenderIcon />,
-    name: "Historique des tickets",
-    path: "/historique",
-  },
-    {
-    icon: <CalenderIcon />,
-    name: "Déclenchement d’un niveau de danger",
-    path: "/danger-level",
-  },
+ 
+    
    {
       name: "User Profile",
       icon: <UserCircleIcon />,
