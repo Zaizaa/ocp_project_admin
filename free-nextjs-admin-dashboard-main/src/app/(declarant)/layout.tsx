@@ -1,7 +1,7 @@
 "use client";
 
 import { useSidebar } from "@/context/SidebarContext";
-import AppHeader from "@/layout/AppHeader-declarant";
+import AppHeader from "@/layout/AppHeader";
 import AppSidebar from "@/layout/AppSidebar-declarant";
 import Backdrop from "@/layout/Backdrop";
 import React from "react";
@@ -13,7 +13,7 @@ export default function AdminLayout({
 }) {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
-  // Détermination dynamique de la marge du contenu principal
+  // Dynamic class for main content margin based on sidebar state
   const mainContentMargin = isMobileOpen
     ? "ml-0"
     : isExpanded || isHovered
@@ -21,22 +21,18 @@ export default function AdminLayout({
     : "lg:ml-[90px]";
 
   return (
-    <div className="min-h-screen xl:flex bg-gray-50 text-gray-800">
-      {/* Barre latérale et fond assombri (mobile) */}
+    <div className="min-h-screen xl:flex">
+      {/* Sidebar and Backdrop */}
       <AppSidebar />
       <Backdrop />
-
-      {/* Zone principale */}
+      {/* Main Content Area */}
       <div
-        className={`flex-1 transition-all duration-300 ease-in-out ${mainContentMargin}`}
+        className={`flex-1 transition-all  duration-300 ease-in-out ${mainContentMargin}`}
       >
-        {/* En-tête */}
+        {/* Header */}
         <AppHeader />
-
-        {/* Contenu de la page */}
-        <div className="p-4 md:p-6 max-w-screen-2xl mx-auto">
-          {children}
-        </div>
+        {/* Page Content */}
+        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">{children}</div>
       </div>
     </div>
   );
