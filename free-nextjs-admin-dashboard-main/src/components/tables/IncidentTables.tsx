@@ -93,25 +93,25 @@ export default function TicketTable() {
             <Table>
               <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                 <TableRow>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs">
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
                     Déclarant
                   </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs">
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
                     Type
                   </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs">
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
                     Gravité
                   </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs">
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
                     Localisation
                   </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs">
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
                     Date
                   </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs">
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
                     Statut
                   </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs">
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
                     Équipe
                   </TableCell>
                 </TableRow>
@@ -141,10 +141,23 @@ export default function TicketTable() {
                       </div>
                     </TableCell>
 
-                    <TableCell className="px-4 py-3 text-start text-theme-sm">{ticket.type}</TableCell>
-                    <TableCell className="px-4 py-3 text-start text-theme-sm">{ticket.gravite}</TableCell>
-                    <TableCell className="px-4 py-3 text-start text-theme-sm">{ticket.localisation}</TableCell>
-                    <TableCell className="px-4 py-3 text-start text-theme-sm">{ticket.date}</TableCell>
+                    <TableCell className="px-4 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.type}</TableCell>
+                    <TableCell>
+                        <Badge
+                          size="sm"
+                          color={
+                            ticket.gravite === "Faible"
+                              ? "success"
+                              : ticket.gravite === "Moyenne"
+                              ? "warning"
+                              : "error"
+                          }
+                        >
+                          {ticket.gravite}
+                        </Badge>
+                      </TableCell>
+                    <TableCell className="px-4 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.localisation}</TableCell>
+                    <TableCell className="px-4 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.date}</TableCell>
                     <TableCell>
                       <Badge
                         size="sm"
