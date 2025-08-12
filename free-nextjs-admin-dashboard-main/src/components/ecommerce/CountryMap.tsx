@@ -1,4 +1,6 @@
 import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 // import { VectorMap } from "@react-jvectormap/core";
 import { worldMill } from "@react-jvectormap/world";
 import dynamic from "next/dynamic";
@@ -118,6 +120,28 @@ const CountryMap: React.FC<CountryMapProps> = ({ mapColor }) => {
       }}
     />
   );
-};
+}
 
-export default CountryMap;
+const ocpSafiPosition: [number, number] = [32.2829, -9.2338]; // ✅ tuple typé
+
+export default function OcpSafiMap() {
+  const installations = [
+    { name: "Installation 1", position: [32.2835, -9.2300] as [number, number] },
+    { name: "Installation 2", position: [32.2810, -9.2350] as [number, number] },
+    { name: "Installation 3", position: [32.2850, -9.2370] as [number, number] },
+  ];
+
+  return (
+    <MapContainer center={ocpSafiPosition} zoom={15} style={{ height: 400, width: '100%' }}>
+      <TileLayer
+        attribution='&copy; OpenStreetMap contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {installations.map((inst, idx) => (
+        <Marker key={idx} position={inst.position}>
+          <Popup>{inst.name}</Popup>
+        </Marker>
+      ))}
+    </MapContainer>
+  );
+}
