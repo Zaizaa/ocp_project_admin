@@ -21,7 +21,6 @@
     "@tailwindcss/postcss": "^4.0.9",
     "apexcharts": "^4.3.0",
     "autoprefixer": "^10.4.20",
-    "axios": "^1.11.0",
     "flatpickr": "^4.6.13",
     "leaflet": "^1.9.4",
     "next": "15.2.3",
