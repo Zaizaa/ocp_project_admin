@@ -1,81 +1,56 @@
 "use client";
-import React, { useState } from 'react';
-import ComponentCard from '../../common/ComponentCard';
-import Label from '../Label';
-import Input from '../input/InputField';
-import Select from '../Select';
-import { ChevronDownIcon, EyeCloseIcon, EyeIcon, TimeIcon } from '../../../icons';
-import DatePicker from '@/components/form/date-picker';
-import TextArea from '../input/TextArea';
-import Radio from '../input/Radio';
+import React, { useState } from "react";
+import Radio from "../input/Radio";
+import ComponentCard from "../../common/ComponentCard";
 
-export default function DefaultInputs() {
-  const [showPassword, setShowPassword] = useState(false);
-  const options = [
-    { value: "marketing", label: "Marketing" },
-    { value: "template", label: "Template" },
-    { value: "development", label: "Development" },
-  ];
-  const handleSelectChange = (value: string) => {
-    console.log("Selected value:", value);
-  };
-    const [selectedValue, setSelectedValue] = useState<string>("option2");
+interface Props {
+  gravite: string;
+  setGravite: (v: string) => void;
+
+  file: string;
   
-    const handleRadioChange = (value: string) => {
-      setSelectedValue(value);
-    };
+  handleFileUpload: (file: File) => void; // Ajoute le type pour handleFileUpload
+}
+
+export default function InputsCreationTicketTwo({ gravite, setGravite ,file, handleFileUpload }: Props) {
+  const [isDragActive, setIsDragActive] = useState(false);
+
+  const handleDrop = (e: React.DragEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsDragActive(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      // Traitez le fichier ici (ex: upload, preview, etc.)
+      console.log(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsDragActive(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragActive(false);
+  };
+
   return (
-    <ComponentCard title="niveau de gravité">
-      <div className="space-y-6">
-           <div className="flex flex-wrap items-center gap-8">
-        <Radio
-          id="radio1"
-          name="group1"
-          value="option1"
-          checked={selectedValue === "option1"}
-          onChange={handleRadioChange}
-          label="Faible"
-        />
-        <Radio
-          id="radio2"
-          name="group1"
-          value="option2"
-          checked={selectedValue === "option2"}
-          onChange={handleRadioChange}
-          label="Moyenne"
-        />
-        <Radio
-          id="radio3"
-          name="group1"
-          value="option3"
-          checked={selectedValue === "option3"}
-          onChange={handleRadioChange}
-          label="Haute"
-        
-        />
-         <Radio
-          id="radio3"
-          name="group1"
-          value="option3"
-          checked={selectedValue === "option3"}
-          onChange={handleRadioChange}
-          label="Critique"
-        
-        />
+    <ComponentCard title="Niveau de gravité">
+      <div className="flex flex-wrap items-center gap-8">
+        <Radio id="faible" name="gravite" value="faible" checked={gravite === "faible"} onChange={(v) => setGravite(v)} label="Faible" />
+        <Radio id="moyenne" name="gravite" value="moyenne" checked={gravite === "moyenne"} onChange={(v) => setGravite(v)} label="Moyenne" />
+        <Radio id="haute" name="gravite" value="haute" checked={gravite === "haute"} onChange={(v) => setGravite(v)} label="Haute" />
+        <Radio id="critique" name="gravite" value="critique" checked={gravite === "critique"} onChange={(v) => setGravite(v)} label="Critique" />
       </div>
 
-
-
-       <div className="transition border border-gray-300 border-dashed cursor-pointer dark:hover:border-brand-500 dark:border-gray-700 rounded-xl hover:border-brand-500">
+      <div className={`transition border border-gray-300 border-dashed cursor-pointer dark:hover:border-brand-500 dark:border-gray-700 rounded-xl hover:border-brand-500 ${isDragActive ? "border-brand-500 bg-gray-100" : ""}`}>
         <form
-         
-          className={`dropzone rounded-xl   border-dashed border-gray-300 p-7 lg:p-10
-        
-      `}
+          className="dropzone rounded-xl border-dashed border-gray-300 p-7 lg:p-10"
           id="demo-upload"
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
         >
-          
-
           <div className="dz-message flex flex-col items-center m-0!">
             {/* Icon Container */}
             <div className="mb-[22px] flex justify-center">
@@ -96,20 +71,27 @@ export default function DefaultInputs() {
               </div>
             </div>
 
-           
-
             <span className=" text-center mb-5 block w-full max-w-[290px] text-sm text-gray-700 dark:text-gray-400">
               Drag and drop your PNG, JPG, WebP, SVG images here or browse
             </span>
 
-            <span className="font-medium underline text-theme-sm text-brand-500">
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="file-upload"
+              onChange={(e) => {
+                const fileObj = e.target.files?.[0];
+                if (fileObj) {
+                  handleFileUpload(fileObj); // Appelle la fonction d'upload
+                }
+              }}
+            />
+            <label htmlFor="file-upload" className="font-medium underline text-theme-sm text-brand-500 cursor-pointer">
               Browse File
-            </span>
+            </label>
           </div>
         </form>
-      </div>
-
-     
       </div>
     </ComponentCard>
   );
