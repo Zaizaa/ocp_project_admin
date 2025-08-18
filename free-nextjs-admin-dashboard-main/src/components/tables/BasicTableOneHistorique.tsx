@@ -11,49 +11,52 @@ import Image from "next/image";
 
 interface Ticket {
   id: number;
-  number: string;
+  numero: string;
   titre: string;
   description: string;
-  type: string;
-  gravite: string;
-  file: string;
+  categorie: string;
+  priorite: string;
+  localisation: string;
   statut: string;
   dateCreation: string;
 }
 
-interface Props {
-  tickets: Ticket[];
-}
+const tableData: Ticket[] = [
+  {
+    id: 1,
+    numero: "TCK-001",
+    titre: "Problème réseau",
+    description: "Impossible de se connecter à Internet.",
+    categorie: "Réseau",
+    priorite: "Haute",
+    localisation: "Usine 1",
+    statut: "Résolu",
+    dateCreation: "2025-08-01",
+  },
+  {
+    id: 2,
+    numero: "TCK-002",
+    titre: "Erreur logiciel",
+    description: "Erreur lors du lancement de l'application.",
+    categorie: "Logiciel",
+    priorite: "Moyenne",
+    localisation: "Usine 2",
+    statut: "Rejeté",
+    dateCreation: "2025-08-02",
+  },
+];
 
-const statuts = ["Tous", "Ouvert", "Résolu", "Rejeté"];
-const priorites = ["Toutes", "haute", "moyenne", "faible","critique"];
+const statuts = ["Tous", "Résolu", "Rejeté"];
+const priorites = ["Toutes", "Haute", "Moyenne", "Faible"];
 
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  const pad = (n: number) => n.toString().padStart(2, "0");
-  return (
-    date.getFullYear() +
-    "-" +
-    pad(date.getMonth() + 1) +
-    "-" +
-    pad(date.getDate()) +
-    " " +
-    pad(date.getHours()) +
-    ":" +
-    pad(date.getMinutes()) +
-    ":" +
-    pad(date.getSeconds())
-  );
-}
-
-export default function BasicTableOneHistorique({ tickets }: Props) {
+export default function BasicTableOne() {
   const [filtreStatut, setFiltreStatut] = useState("Tous");
   const [filtrePriorite, setFiltrePriorite] = useState("Toutes");
 
-  const ticketsFiltres = tickets.filter(
+  const ticketsFiltres = tableData.filter(
     (t) =>
       (filtreStatut === "Tous" || t.statut === filtreStatut) &&
-      (filtrePriorite === "Toutes" || t.gravite === filtrePriorite)
+      (filtrePriorite === "Toutes" || t.priorite === filtrePriorite)
   );
 
   return (
@@ -86,66 +89,54 @@ export default function BasicTableOneHistorique({ tickets }: Props) {
       </div>
       <div className="max-w-full overflow-x-auto">
         <div className="min-w-[902px]">
-          <Table className="table-fixed w-full">
+          <Table>
             {/* Table Header */}
             <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
               <TableRow>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Numero</TableCell>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Titre</TableCell>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">description</TableCell>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">categorie</TableCell>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">priorité</TableCell>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">File</TableCell>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Statut</TableCell>
-                <TableCell isHeader className="w-[110px] px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">date de création</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Numero</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Titre</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">description</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">categorie</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">priorité</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">localisation</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">Statut</TableCell>
+                <TableCell isHeader className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400">date de création</TableCell>
               </TableRow>
             </TableHeader>
             {/* Table Body */}
             <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-              {ticketsFiltres.map((order, idx) => (
-                <TableRow key={order.id ?? order.number ?? idx}>
+              {ticketsFiltres.map((order) => (
+                <TableRow key={order.id}>
                   <TableCell className="px-5 py-4 sm:px-6 text-start">
                     <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                      {order.number}
+                      {order.numero}
                     </span>
                   </TableCell>
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{order.titre}</TableCell>
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{order.description}</TableCell>
-                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{order.type}</TableCell>
+                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{order.categorie}</TableCell>
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                     <Badge
                       size="sm"
                       color={
-                        order.gravite === "haute"
+                        order.priorite === "Haute"
                           ? "error"
-                          : order.gravite === "moyenne"
+                          : order.priorite === "Moyenne"
                           ? "warning"
                           : "success"
                       }
                     >
-                      {order.gravite}
+                      {order.priorite}
                     </Badge>
                   </TableCell>
-                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                    {order.file ? (
-                      <Image
-                        src={`http://localhost:8080/${order.file}`}
-                        alt="file"
-                        width={40}
-                        height={40}
-                        className="object-cover rounded"
-                      />
-                    ) : (
-                      <span className="italic text-gray-400">Aucun fichier</span>
-                    )}
-                  </TableCell>
+                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{order.localisation}</TableCell>
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                     <Badge
                       size="sm"
                       color={
                         order.statut === "Résolu"
                           ? "success"
-                          : order.statut === "Ouvert"
+                          : order.statut === "Rejeté"
                           ? "error"
                           : "warning"
                       }
@@ -153,7 +144,7 @@ export default function BasicTableOneHistorique({ tickets }: Props) {
                       {order.statut}
                     </Badge>
                   </TableCell>
-                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{formatDate(order.dateCreation)}</TableCell>
+                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">{order.dateCreation}</TableCell>
                 </TableRow>
               ))}
               {ticketsFiltres.length === 0 && (
