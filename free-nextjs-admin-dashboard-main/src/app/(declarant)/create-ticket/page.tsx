@@ -35,7 +35,6 @@ export default function CreateTicketPage() {
       file,
       dateCreation: new Date().toISOString(),
       number: ticketNumber,
-      statut: "Ouvert", 
     };
 
     try {
@@ -63,25 +62,6 @@ export default function CreateTicketPage() {
     }
   };
 
-  const handleFileUpload = async (file: File) => {
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const response = await fetch("http://localhost:8080/uploads", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      // data.url contient l'URL de l'image stockée sur le serveur
-      console.log("Image URL:", data.url);
-      // Tu peux stocker data.url dans ton ticket (setFile(data.url))
-    } else {
-      alert("Erreur lors de l'upload");
-    }
-  };
-
   return (
     <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
       <div className="space-y-6">
@@ -92,19 +72,16 @@ export default function CreateTicketPage() {
           setType={setType}
           description={description}
           setDescription={setDescription}
-          installation={installation}
-          
-          
-        />
+          setInstallation={setInstallation} installation={""} setFile={function (f: File | null): void {
+            throw new Error("Function not implemented.");
+          } }        />
       </div>
 
       <div className="space-y-6">
         <InputsCreationTicketTwo
           gravite={gravite}
           setGravite={setGravite}
-          file={file}
           
-          handleFileUpload={handleFileUpload} // Passe la vraie fonction
         />
         <button
           onClick={handleSubmit}

@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   Table,
@@ -129,7 +130,7 @@ export default function BasicTableOneHistorique({ tickets }: Props) {
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                     {order.file ? (
                       <Image
-                        src={`http://localhost:8080/${order.file}`}
+                        src="/placeholder-file.png"
                         alt="file"
                         width={40}
                         height={40}

@@ -2,17 +2,9 @@
 import React, { useState } from "react";
 import Radio from "../input/Radio";
 import ComponentCard from "../../common/ComponentCard";
+import { Props } from "../../../../next.config";
 
-interface Props {
-  gravite: string;
-  setGravite: (v: string) => void;
-
-  file: string;
-  
-  handleFileUpload: (file: File) => void; // Ajoute le type pour handleFileUpload
-}
-
-export default function InputsCreationTicketTwo({ gravite, setGravite ,file, handleFileUpload }: Props) {
+export default function InputsCreationTicketTwo({ gravite, setGravite }: Props) {
   const [isDragActive, setIsDragActive] = useState(false);
 
   const handleDrop = (e: React.DragEvent<HTMLFormElement>) => {
@@ -81,9 +73,10 @@ export default function InputsCreationTicketTwo({ gravite, setGravite ,file, han
               className="hidden"
               id="file-upload"
               onChange={(e) => {
-                const fileObj = e.target.files?.[0];
-                if (fileObj) {
-                  handleFileUpload(fileObj); // Appelle la fonction d'upload
+                const file = e.target.files?.[0];
+                if (file) {
+                  // Traitez le fichier ici (ex: upload, preview, etc.)
+                  console.log(file);
                 }
               }}
             />

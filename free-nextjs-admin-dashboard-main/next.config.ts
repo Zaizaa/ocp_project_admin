@@ -12,3 +12,7 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+export interface Props {
+  gravite: string;
+  setGravite: (v: string) => void;
+}

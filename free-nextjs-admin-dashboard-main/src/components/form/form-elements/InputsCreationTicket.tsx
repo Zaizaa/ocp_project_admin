@@ -16,8 +16,8 @@ interface Props {
   setDescription: (v: string) => void;
   
   installation: string;          // <-- nouveau
-  //setInstallation: (v: string) => void;
-
+  setInstallation: (v: string) => void;
+  setFile: (f: File | null) => void;
 }
 
  const options_Type = [
@@ -42,7 +42,7 @@ export default function InputsCreationTicket({
   setType,
   description,
   setDescription,
- // setInstallation,
+  setInstallation,
 }: Props) {
   return (
      <ComponentCard title="déclaration du ticket">
@@ -58,12 +58,12 @@ export default function InputsCreationTicket({
         <Label>selectionner le type du ticket</Label>
           <div className="relative">
             <Select
-              options={options_Type}
-              placeholder="Select an option"
+    options={options_Type}
+    placeholder="Select an option"
 
-              onChange={(val) => setType(val)}  // <-- setter pour state
-              className="dark:bg-dark-900"
-            />
+    onChange={(val) => setType(val)}  // <-- setter pour state
+    className="dark:bg-dark-900"
+  />
           <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
             <ChevronDownIcon />
           </span>
@@ -83,13 +83,12 @@ export default function InputsCreationTicket({
       <Label>selectionner l'installation</Label>
           <div className="relative">
            <Select
-            options={options_Installation}
-            placeholder="Select an option"
-
-            //onChange={(val) => setInstallation(val)} 
-            className="dark:bg-dark-900" onChange={function (value: string): void {
-              throw new Error("Function not implemented.");
-            } }/>
+  options={options_Installation}
+  placeholder="Select an option"
+               
+  onChange={(val) => setInstallation(val)} // <-- setter pour state
+  className="dark:bg-dark-900"
+/>
           <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
             <ChevronDownIcon />
           </span>
