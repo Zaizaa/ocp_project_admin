@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import React from "react";
-import DemographicCard from "@/components/ecommerce/DemographicCard";
+import Chef_card from "@/components/ecommerce/Chef_card";
 
 export const metadata: Metadata = {
   title:
@@ -12,7 +12,7 @@ export default function Ecommerce() {
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6">
       <div className="col-span-12 xl:col-span-5">
-        <DemographicCard />
+        <Chef_card />
       </div>
     </div>
   );
