@@ -1,22 +1,21 @@
 package com.example.Backend_ProjetTicket_OCP;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
 import com.example.Backend_ProjetTicket_OCP.Entite.Installation;
 import com.example.Backend_ProjetTicket_OCP.Entite.User;
 import com.example.Backend_ProjetTicket_OCP.Repo.InstallationRepository;
 import com.example.Backend_ProjetTicket_OCP.Repo.UserRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BackendProjetTicketOcpApplication {
-    
+
     public static void main(String[] args) {
         SpringApplication.run(BackendProjetTicketOcpApplication.class, args);
     }
-    
+
     @Bean
     CommandLineRunner initDatabase(InstallationRepository installationRepository) {
         return args -> {
@@ -29,7 +28,7 @@ public class BackendProjetTicketOcpApplication {
             }
         };
     }
-    
+
     // Initialisation des utilisateurs
     @Bean
     CommandLineRunner initUserDatabase(UserRepository userRepository) {
