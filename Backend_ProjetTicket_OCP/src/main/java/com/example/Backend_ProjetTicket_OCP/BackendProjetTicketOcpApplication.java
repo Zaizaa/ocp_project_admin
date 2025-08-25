@@ -12,11 +12,11 @@ import com.example.Backend_ProjetTicket_OCP.Repo.UserRepository;
 
 @SpringBootApplication
 public class BackendProjetTicketOcpApplication {
-
+    
     public static void main(String[] args) {
         SpringApplication.run(BackendProjetTicketOcpApplication.class, args);
     }
-
+    
     @Bean
     CommandLineRunner initDatabase(InstallationRepository installationRepository) {
         return args -> {
@@ -29,7 +29,7 @@ public class BackendProjetTicketOcpApplication {
             }
         };
     }
-
+    
     // Initialisation des utilisateurs
     @Bean
     CommandLineRunner initUserDatabase(UserRepository userRepository) {
