@@ -8,7 +8,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/installations")
-@CrossOrigin(origins = "*") // permet les appels depuis un frontend
 public class InstallationController {
 
     private final InstallationService installationService;

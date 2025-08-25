@@ -40,6 +40,8 @@ public class TicketService {
 
                     ticket.setStatut(updatedTicket.getStatut());
                     ticket.setDateCreation(updatedTicket.getDateCreation());
+                    ticket.setInstallation(updatedTicket.getInstallation());
+
 
                     return ticketRepository.save(ticket);
                 })

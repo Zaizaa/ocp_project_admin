@@ -1,7 +1,7 @@
 "use client";
 
 import { useSidebar } from "@/context/SidebarContext";
-import AppHeader from "@/layout/AppHeader";
+import AppHeader from "@/layout/AppHeader-declarant";
 import AppSidebar from "@/layout/AppSidebar-declarant";
 import Backdrop from "@/layout/Backdrop";
 import React from "react";
@@ -30,7 +30,7 @@ export default function AdminLayout({
         className={`flex-1 transition-all  duration-300 ease-in-out ${mainContentMargin}`}
       >
         {/* Header */}
-        <AppHeader />
+  
         {/* Page Content */}
         <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">{children}</div>
       </div>

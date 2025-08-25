@@ -1,76 +1,113 @@
 "use client";
-import React, { useState } from 'react';
-import ComponentCard from '../../common/ComponentCard';
-import Label from '../Label';
-import Input from '../input/InputField';
-import Select from '../Select';
-import { ChevronDownIcon, EyeCloseIcon, EyeIcon, TimeIcon } from '../../../icons';
-import DatePicker from '@/components/form/date-picker';
-import TextArea from '../input/TextArea';
+import React, { useEffect, useState } from "react";
+import Label from "../Label";
+import Input from "../input/InputField";
+import TextArea from "../input/TextArea";
+import Select from "../Select";
+import { ChevronDownIcon } from "@/icons";
+import ComponentCard from "@/components/common/ComponentCard";
+import axios from "axios";
 
-export default function DefaultInputs() {
-  const [showPassword, setShowPassword] = useState(false);
-  const options = [
-    { value: "Technique", label: "Technique" },
-    { value: "Mécanique", label: "Mécanique" },
-    { value: "logiciel", label: "Development" },
-  ];
-   const options2 = [
-    { value: "usine1", label: "usine1" },
-    { value: "Usine2", label: "Usine2" },
-    { value: "Usine3", label: "Development" },
-  ];
-  const handleSelectChange = (value: string) => {
-    console.log("Selected value:", value);
-  };
+interface Props {
+  titre: string;
+  setTitre: (v: string) => void;
+  type: string;
+  setType: (v: string) => void;
+  description: string;
+  setDescription: (v: string) => void;
+  installation: string;
+  setInstallation: (v: string) => void;
+}
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+const options_Type: Option[] = [
+  { value: "Technique", label: "Technique" },
+  { value: "Mécanique", label: "Mécanique" },
+  { value: "logiciel", label: "Développement" },
+];
+
+export default function InputsCreationTicket({
+  titre,
+  setTitre,
+  type,
+  setType,
+  description,
+  setDescription,
+  installation,
+  setInstallation,
+}: Props) {
+  const [installations, setInstallations] = useState<Option[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/installations")
+      .then((response) => {
+        const formattedOptions: Option[] = response.data.map((inst: any) => ({
+          value: inst.idInstallation, // id comme valeur
+          label: inst.nomInstallation, // nom affiché
+        }));
+        setInstallations(formattedOptions);
+      })
+      .catch(() => {
+        setInstallations([]);
+      });
+  }, []);
+
   return (
-    <ComponentCard title="déclaration du ticket">
-      <div className="space-y-6 ">
+    <ComponentCard title="Déclaration du ticket">
+      <div className="space-y-6">
+        {/* Champ titre */}
         <div>
           <Label>Titre</Label>
-          <Input type="text" />
+          <Input value={titre} onChange={(e) => setTitre(e.target.value)} />
         </div>
-        
+
+        {/* Sélecteur de type */}
         <div>
-          <Label>selectionner le type du ticket</Label>
+          <Label>Sélectionner le type du ticket</Label>
           <div className="relative">
             <Select
-            options={options}
-            placeholder="Select an option"
-            onChange={handleSelectChange}
-            className="dark:bg-dark-900"
-          />
-             <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
-              <ChevronDownIcon/>
+              options={options_Type}
+              placeholder="Select an option"
+              onChange={(val) => setType(val)}
+              className="dark:bg-dark-900"
+            />
+            <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+              <ChevronDownIcon />
             </span>
           </div>
         </div>
-       
 
-        
-
-        
-       <div>
+        {/* Description */}
+        <div>
           <Label>Description</Label>
-          <TextArea rows={4}  />
+          <TextArea
+            rows={4}
+            placeholder="Enter your description"
+            value={description}
+            onChange={(val) => setDescription(val)}
+          />
         </div>
 
-
+        {/* Sélecteur d’installation */}
         <div>
-          <Label>selectionner la localisation</Label>
+          <Label>Sélectionner l&apos;installation</Label>
           <div className="relative">
             <Select
-            options={options2}
-            placeholder="Select an option"
-            onChange={handleSelectChange}
-            className="dark:bg-dark-900"
-          />
-             <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
-              <ChevronDownIcon/>
+              options={installations}
+              placeholder="Select an option"
+              onChange={(val) => setInstallation(val)}
+              className="dark:bg-dark-900"
+            />
+            <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
+              <ChevronDownIcon />
             </span>
           </div>
         </div>
-        
       </div>
     </ComponentCard>
   );
