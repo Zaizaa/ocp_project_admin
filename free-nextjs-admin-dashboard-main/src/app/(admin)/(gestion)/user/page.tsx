@@ -44,7 +44,7 @@ export default function GestionUtilisateurs() {
 
   const roles = ['admin', 'chef équipe', 'membre équipe','declarant'];
 
-  // Charger les utilisateurs depuis le backend
+  // Charger les utilisateurs depuis le backend xxxxxxxxxxxxx
   useEffect(() => {
     fetchUsers();
   }, []);
