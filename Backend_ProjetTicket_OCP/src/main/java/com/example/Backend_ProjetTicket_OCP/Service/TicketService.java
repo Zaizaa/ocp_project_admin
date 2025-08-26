@@ -30,8 +30,7 @@ public class TicketService {
     }
     //
 
-    public Optional<Ticket> getTicketById(int id) {
-        return ticketRepository.findById((long) id);
+
 
     public Optional<Ticket> getTicketById(int id) {
         return ticketRepository.findById(id);

@@ -38,10 +38,8 @@ public class Ticket {
     @JoinColumn(name = "idUser", nullable = false)
     private User declarant;
 
-    //Relation avec Installation
-    @ManyToOne
-    @JoinColumn(name = "installation_id", nullable = false)
-    private Installation installation;
+
+
 
 
     public Ticket() {}
@@ -86,7 +84,6 @@ public class Ticket {
     public User getDeclarant() { return declarant; }
     public void setDeclarant(User declarant) { this.declarant = declarant; }
 
-    public Installation getInstallation() { return installation; }
-    public void setInstallation(Installation installation) { this.installation = installation; }
+
 }
 
