@@ -30,7 +30,7 @@ public class SuiviTicketService {
 
 
 
-    public SuiviTicketDTO assignTicketToEquipe(Long ticketId, Long equipeId) {
+    public SuiviTicketDTO assignTicketToEquipe(int ticketId, Long equipeId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
         Equipe equipe = equipeRepository.findById(equipeId)
