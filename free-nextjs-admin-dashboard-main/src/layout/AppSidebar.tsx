@@ -44,6 +44,11 @@ const navItems: NavItem[] = [
     path: "/user",
   },
   {
+    name: "Tickets",
+    icon: <TableIcon />,
+    path: "/basic-tables",
+  },
+  {
     icon: <CalenderIcon />,
     name: "Calendar",
     path: "/calendar",
@@ -59,14 +64,10 @@ const navItems: NavItem[] = [
     icon: <ListIcon />,
     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
   },
-  {
-    name: "Tickets",
-    icon: <TableIcon />,
-    path: "/basic-tables",
-  },
+  
   {
     name: "Pages",
-    icon: <PageIcon />,
+    icon: <PageIcon />,             
     subItems: [
       { name: "Blank Page", path: "/blank", pro: false },
       { name: "404 Error", path: "/error-404", pro: false },

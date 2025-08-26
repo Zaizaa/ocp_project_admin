@@ -19,10 +19,14 @@ interface Ticket {
     name: string;
     role: "DECLARANT" | "CHEFEQUIPE" | "ADMIN";
   };
+  titre: string;
+  description: string;
+  rapport: string;
+  file?: string; // image jointe optionnelle
   type: string;
   gravite: string;
   localisation: string;
-  date: string;
+  dateCreation: string;
   statut: "Déclaré" | "En cours" | "Résolu";
   equipe?: string;
 }
@@ -35,10 +39,14 @@ const initialTickets: Ticket[] = [
       name: "Karim Benali",
       role: "DECLARANT",
     },
+    titre: "Panne moteur",
+    description: "Le moteur principal de la ligne est tombé en panne.",
+    rapport: "Arrêt immédiat de la production.",
+    file: "/images/incidents/incident-1.jpg",
     type: "Mécanique",
     gravite: "Critique",
     localisation: "Atelier A1",
-    date: "2025-08-01",
+    dateCreation: "2025-08-01",
     statut: "Déclaré",
     equipe: "",
   },
@@ -49,10 +57,14 @@ const initialTickets: Ticket[] = [
       name: "Salma Ouhmani",
       role: "DECLARANT",
     },
+    titre: "Court-circuit",
+    description: "Un câble a provoqué une étincelle dans la zone électrique.",
+    rapport: "Risque d’incendie contrôlé par l’équipe.",
+    file: "/images/incidents/incident-2.jpg",
     type: "Électrique",
     gravite: "Moyenne",
     localisation: "Zone B4",
-    date: "2025-08-03",
+    dateCreation: "2025-08-03",
     statut: "En cours",
     equipe: "Équipe Alpha",
   },
@@ -63,10 +75,14 @@ const initialTickets: Ticket[] = [
       name: "Youssef Ziani",
       role: "DECLARANT",
     },
+    titre: "Fuite hydraulique",
+    description: "Perte de pression dans le système hydraulique.",
+    rapport: "Réparation effectuée et système redémarré.",
+    file: "/images/incidents/incident-3.jpg",
     type: "Hydraulique",
     gravite: "Faible",
     localisation: "Poste C2",
-    date: "2025-08-04",
+    dateCreation: "2025-08-04",
     statut: "Résolu",
     equipe: "",
   },
@@ -89,75 +105,86 @@ export default function TicketTable() {
     <div>
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
-          <div className="min-w-[1102px]">
+          <div className="min-w-[1400px]">
             <Table>
               <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                 <TableRow>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
-                    Déclarant
-                  </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
-                    Type
-                  </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
-                    Gravité
-                  </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
-                    Localisation
-                  </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
-                    Date
-                  </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
-                    Statut
-                  </TableCell>
-                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">
-                    Équipe
-                  </TableCell>
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">Déclarant</TableCell>
+                  <TableCell isHeader className="px-5 py-3 text-start text-theme-xs dark:text-white/90">Titre</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Description</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Rapport</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Fichier à joindre</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Type</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Gravité</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Localisation</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Date</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Statut</TableCell>
+                  <TableCell isHeader className="px-6 py-3 text-start text-theme-xs dark:text-white/90">Équipe</TableCell>
                 </TableRow>
               </TableHeader>
 
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
                 {tickets.map((ticket) => (
                   <TableRow key={ticket.id}>
-                    <TableCell className="px-5 py-4 text-start">
+                    {/* Déclarant */}
+                    <TableCell className="px-6 py-4 text-start">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 overflow-hidden rounded-full">
-                          <Image
-                            width={40}
-                            height={40}
-                            src={ticket.declarant.image}
-                            alt={ticket.declarant.name}
-                          />
-                        </div>
+            
                         <div>
-                          <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                            {ticket.declarant.name}
-                          </span>
-                          <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                            {ticket.declarant.role}
-                          </span>
+                          <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">{ticket.declarant.name}</span>
+                          <span className="block text-gray-500 text-theme-xs dark:text-gray-400">{ticket.declarant.role}</span>
                         </div>
                       </div>
                     </TableCell>
 
-                    <TableCell className="px-4 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.type}</TableCell>
-                    <TableCell>
-                        <Badge
-                          size="sm"
-                          color={
-                            ticket.gravite === "Faible"
-                              ? "success"
-                              : ticket.gravite === "Moyenne"
-                              ? "warning"
-                              : "error"
-                          }
+                    {/* Nouveau champs */}
+                    <TableCell className="px-6 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.titre}</TableCell>
+                    <TableCell className="px-6 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.description}</TableCell>
+                     <TableCell>
+                      {ticket.rapport ? (
+                        <a
+                          href={ticket.rapport}
+                          target="_blank"
+                          className="text-blue-600 underline"
                         >
-                          {ticket.gravite}
-                        </Badge>
-                      </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.localisation}</TableCell>
-                    <TableCell className="px-4 py-3 text-start text-theme-sm dark:text-gray-400">{ticket.date}</TableCell>
+                          Voir PDF
+                        </a>
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {ticket.file ? (
+                        <Image
+                          src={ticket.file}
+                          alt="Incident"
+                          width={50}
+                          height={50}
+                          className="rounded-md"
+                        />
+                      ) : (
+                        <span className="text-gray-400 italic">Aucun</span>
+                      )}
+                    </TableCell>
+
+                    {/* Déjà existants */}
+                    <TableCell>{ticket.type}</TableCell>
+                    <TableCell>
+                      <Badge
+                        size="sm"
+                        color={
+                          ticket.gravite === "Faible"
+                            ? "success"
+                            : ticket.gravite === "Moyenne"
+                            ? "warning"
+                            : "error"
+                        }
+                      >
+                        {ticket.gravite}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>{ticket.localisation}</TableCell>
+                    <TableCell>{ticket.dateCreation}</TableCell>
                     <TableCell>
                       <Badge
                         size="sm"
