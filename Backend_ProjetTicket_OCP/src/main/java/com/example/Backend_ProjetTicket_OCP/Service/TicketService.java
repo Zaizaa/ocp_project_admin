@@ -24,11 +24,7 @@ public class TicketService {
     }
 
 
-    // === Pour l'espace Admin ===
-    public List<TicketDTO> getAllTicketsAdmin() {
-        return ticketRepository.findAllTicketsWithDetails();
-    }
-    //
+   
 
 
 

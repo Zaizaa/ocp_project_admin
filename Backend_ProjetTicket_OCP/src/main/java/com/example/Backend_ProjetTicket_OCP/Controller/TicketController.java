@@ -52,11 +52,7 @@ public class TicketController {
 
 
 
-    //get all tickets for admin
-    @GetMapping
-    public List<TicketDTO> getallTicketsadmin() {
-        return ticketService.getAllTicketsAdmin();
-    }
+
 
 
 }

@@ -35,7 +35,7 @@ public class Ticket {
     //ajout id declarant
     //Relation avec User (déclarant)
     @ManyToOne
-    @JoinColumn(name = "idUser", nullable = false)
+    @JoinColumn(name = "idUser")
     private User declarant;
 
 

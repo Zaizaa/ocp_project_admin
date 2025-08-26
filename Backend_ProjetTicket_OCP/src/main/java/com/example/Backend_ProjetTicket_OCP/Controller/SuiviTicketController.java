@@ -19,10 +19,14 @@ public class SuiviTicketController {
         this.suiviTicketService = suiviTicketService;
     }
 
+    @GetMapping
+    public List<TicketDTO> getallTicketsadmin() {
+        return suiviTicketService.getAllTicketsAdmin();
+    }
 
 
     @PostMapping("/assign/{ticketId}/to/{equipeId}")
-    public SuiviTicketDTO assignTicket(@PathVariable int ticketId, @PathVariable Long equipeId) {
+    public SuiviTicketDTO assignTicket(@PathVariable int ticketId, @PathVariable int equipeId) {
         return suiviTicketService.assignTicketToEquipe(ticketId, equipeId);
     }
 

@@ -28,12 +28,16 @@ public class SuiviTicketService {
         this.equipeRepository = equipeRepository;
     }
 
+    // === Pour l'espace Admin ===
+    public List<TicketDTO> getAllTicketsAdmin() {
+        return ticketRepository.findAllTicketsWithDetails();
+    }
+    //
 
-
-    public SuiviTicketDTO assignTicketToEquipe(int ticketId, Long equipeId) {
+    public SuiviTicketDTO assignTicketToEquipe(int ticketId, int idEquipe) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
-        Equipe equipe = equipeRepository.findById(equipeId)
+        Equipe equipe = equipeRepository.findById(idEquipe)
                 .orElseThrow(() -> new RuntimeException("Equipe not found"));
 
         SuiviTicket suiviTicket = new SuiviTicket();
