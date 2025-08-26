@@ -1,6 +1,8 @@
 package com.example.Backend_ProjetTicket_OCP.Controller;
 
+
 import com.example.Backend_ProjetTicket_OCP.DTO.TicketDTO;
+
 import com.example.Backend_ProjetTicket_OCP.Entite.Ticket;
 import com.example.Backend_ProjetTicket_OCP.Service.TicketService;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +51,7 @@ public class TicketController {
 
 
 
+
     //get all tickets for admin
     @GetMapping
     public List<TicketDTO> getallTicketsadmin() {
@@ -57,3 +60,6 @@ public class TicketController {
 
 
 }
+
+}
+

@@ -1,5 +1,6 @@
 package com.example.Backend_ProjetTicket_OCP.Repo;
 
+
 import com.example.Backend_ProjetTicket_OCP.DTO.TicketDTO;
 import com.example.Backend_ProjetTicket_OCP.Entite.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
+public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query("SELECT new com.example.Backend_ProjetTicket_OCP.DTO.TicketDTO(" +
             "t.idTicket, u.role, u.nom, t.titre, t.description, " +
@@ -21,3 +22,4 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     )
     List<TicketDTO> findAllTicketsWithDetails();
 }
+

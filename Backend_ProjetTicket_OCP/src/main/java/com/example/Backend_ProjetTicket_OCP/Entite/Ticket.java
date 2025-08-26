@@ -1,6 +1,13 @@
 package com.example.Backend_ProjetTicket_OCP.Entite;
 
+
 import jakarta.persistence.*;
+
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id; // <-- CORRECT import
 
 import java.util.Date;
 
@@ -19,6 +26,7 @@ public class Ticket {
     private String statut; // ouvert, en cours, résolue, fermé
     private Date dateCreation;
 
+
     //ajout id declarant
     //Relation avec User (déclarant)
     @ManyToOne
@@ -29,6 +37,7 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "installation_id", nullable = false)
     private Installation installation;
+
 
     public Ticket() {}
 
@@ -65,9 +74,11 @@ public class Ticket {
     public Date getDateCreation() { return dateCreation; }
     public void setDateCreation(Date dateCreation) { this.dateCreation = dateCreation; }
 
+
     public User getDeclarant() { return declarant; }
     public void setDeclarant(User declarant) { this.declarant = declarant; }
 
     public Installation getInstallation() { return installation; }
     public void setInstallation(Installation installation) { this.installation = installation; }
 }
+
