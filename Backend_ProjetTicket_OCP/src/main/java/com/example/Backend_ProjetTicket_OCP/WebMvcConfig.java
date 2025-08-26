@@ -1,4 +1,4 @@
-package com.example.serviceOffre;
+package com.example.Backend_ProjetTicket_OCP;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
