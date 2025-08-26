@@ -3,7 +3,6 @@ package com.example.Backend_ProjetTicket_OCP.Controller;
 import com.example.Backend_ProjetTicket_OCP.Entite.Installation;
 import com.example.Backend_ProjetTicket_OCP.Service.InstallationService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
