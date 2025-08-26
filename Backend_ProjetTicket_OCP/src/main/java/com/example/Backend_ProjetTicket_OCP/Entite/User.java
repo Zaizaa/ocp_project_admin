@@ -1,5 +1,6 @@
 package com.example.Backend_ProjetTicket_OCP.Entite;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -74,3 +75,4 @@ public class User {
         return prenom + " " + nom;
     }
 }
+

@@ -1,5 +1,8 @@
 package com.example.Backend_ProjetTicket_OCP.Service;
 
+
+import com.example.Backend_ProjetTicket_OCP.DTO.TicketDTO;
+
 import com.example.Backend_ProjetTicket_OCP.Entite.Ticket;
 import com.example.Backend_ProjetTicket_OCP.Repo.TicketRepository;
 import org.springframework.stereotype.Service;
@@ -20,8 +23,19 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
+
+    // === Pour l'espace Admin ===
+    public List<TicketDTO> getAllTicketsAdmin() {
+        return ticketRepository.findAllTicketsWithDetails();
+    }
+    //
+
+    public Optional<Ticket> getTicketById(int id) {
+        return ticketRepository.findById((long) id);
+
     public Optional<Ticket> getTicketById(int id) {
         return ticketRepository.findById(id);
+
     }
 
     public Ticket createTicket(Ticket ticket) {
@@ -29,7 +43,11 @@ public class TicketService {
     }
 
     public Ticket updateTicket(int id, Ticket updatedTicket) {
+
+      
+
         return ticketRepository.findById(id)
+
                 .map(ticket -> {
                     ticket.setNumber(updatedTicket.getNumber());
                     ticket.setTitre(updatedTicket.getTitre());
@@ -47,9 +65,15 @@ public class TicketService {
     }
 
     public void deleteTicket(int id) {
+
+      
+
         ticketRepository.deleteById(id);
+
     }
     public void deleteAllTickets() {
         ticketRepository.deleteAll();
     }
+
 }
+
