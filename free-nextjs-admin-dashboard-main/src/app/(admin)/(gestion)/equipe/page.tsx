@@ -53,7 +53,9 @@ export default function GestionEquipes() {
     department: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -101,7 +103,7 @@ export default function GestionEquipes() {
         </button>
       </div>
 
-      {/* Formulaire sous le header */}
+      {/* Formulaire */}
       {showForm && (
         <div className="mb-6 bg-white rounded-lg shadow border">
           <div className="p-6">
@@ -113,6 +115,7 @@ export default function GestionEquipes() {
               <button 
                 onClick={() => setShowForm(false)}
                 className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-lg transition-colors"
+                aria-label="Fermer le formulaire"
               >
                 <X size={20} />
               </button>
@@ -126,7 +129,7 @@ export default function GestionEquipes() {
                   {/* Team Name */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Nom de l'équipe *
+                      Nom de l&apos;équipe *
                     </label>
                     <input
                       type="text"
@@ -147,7 +150,7 @@ export default function GestionEquipes() {
                       name="description"
                       value={formData.description}
                       onChange={handleInputChange}
-                      placeholder="Description de l'équipe et de ses responsabilités..."
+                      placeholder="Description de l&apos;équipe et de ses responsabilités..."
                       rows={4}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
                     />
@@ -155,7 +158,7 @@ export default function GestionEquipes() {
                 </div>
               </div>
 
-              {/* Section Leadership et Organisation */}
+              {/* Section Leadership */}
               <div className="bg-purple-50 p-4 rounded-lg">
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Leadership et Organisation</h3>
                 <div className="space-y-4">
@@ -163,7 +166,7 @@ export default function GestionEquipes() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       <Crown className="inline w-4 h-4 mr-1 text-yellow-500" />
-                      Chef d'équipe *
+                      Chef d&apos;équipe *
                     </label>
                     <select
                       name="leader"
@@ -171,7 +174,7 @@ export default function GestionEquipes() {
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     >
-                      <option value="">Sélectionner un chef d'équipe</option>
+                      <option value="">Sélectionner un chef d&apos;équipe</option>
                       <option value="Jean Dupont">Jean Dupont</option>
                       <option value="Marie Leroy">Marie Leroy</option>
                       <option value="Pierre Martin">Pierre Martin</option>
@@ -225,7 +228,7 @@ export default function GestionEquipes() {
                   onClick={handleCreateTeam}
                   className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors font-medium shadow-sm"
                 >
-                  Créer l'Équipe
+                  Créer l&apos;Équipe
                 </button>
               </div>
             </div>
@@ -241,11 +244,15 @@ export default function GestionEquipes() {
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-xl font-semibold text-gray-900">{team.name}</h3>
               <div className="flex gap-2">
-                <button className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                <button 
+                  aria-label="Modifier l'équipe"
+                  className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                >
                   <Edit size={16} />
                 </button>
                 <button 
                   onClick={() => handleDeleteTeam(team.id)}
+                  aria-label="Supprimer l'équipe"
                   className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                 >
                   <Trash2 size={16} />
@@ -276,7 +283,7 @@ export default function GestionEquipes() {
             {/* Members List */}
             {team.members.length > 0 && (
               <div className="mb-4">
-                <p className="text-sm font-medium text-gray-700 mb-2">Membres:</p>
+                <p className="text-sm font-medium text-gray-700 mb-2">Membres :</p>
                 <div className="flex flex-wrap gap-1">
                   {team.members.slice(0, 3).map((member, index) => (
                     <span 
@@ -304,7 +311,7 @@ export default function GestionEquipes() {
           </div>
         ))}
 
-        {/* Empty State or Add Team Card */}
+        {/* Empty State */}
         {teams.length === 0 && (
           <div className="col-span-full flex items-center justify-center p-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
             <div className="text-center">

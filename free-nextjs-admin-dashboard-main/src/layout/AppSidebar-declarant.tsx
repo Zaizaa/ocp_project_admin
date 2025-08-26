@@ -9,10 +9,9 @@ import {
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  PageIcon,
-  UserCircleIcon,
+ 
 } from "../icons/index";
-import SidebarWidget from "./SidebarWidget";
+
 
 type NavItem = {
   name: string;
@@ -34,16 +33,7 @@ const navItems: NavItem[] = [
   },
  
     
-   {
-      name: "User Profile",
-      icon: <UserCircleIcon />,
-      subItems: [
-        { name: "Edit profil", path: "/blank", pro: false },
-        { name: "profile settings", path: "/error-404", pro: false },
-        { name: "support", path: "/blank", pro: false },
-        { name: "log out", path: "/error-404", pro: false },
-      ],
-    },
+   
   
 ];
 
