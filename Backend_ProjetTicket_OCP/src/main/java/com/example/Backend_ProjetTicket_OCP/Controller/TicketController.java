@@ -52,8 +52,8 @@ public class TicketController {
 
     /*nouhaila*/
     @GetMapping("/count")
-    public long getTicketCount() {
-        return ticketService.countTickets();
+    public Map<String, Long> getTicketStats() {
+        return ticketService.getTicketStats();
     }
     @GetMapping("/count-by-installation")
     public List<Object[]> getTicketCountByInstallation() {
@@ -71,6 +71,7 @@ public class TicketController {
     public List<Object[]> getTicketCountByInstallationWithLocation() {
         return ticketService.getTicketCountByInstallationWithLocation();
     }
+
 
 
 

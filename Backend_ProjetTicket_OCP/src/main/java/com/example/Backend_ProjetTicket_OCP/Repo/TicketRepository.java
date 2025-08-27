@@ -38,5 +38,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
             "FROM Ticket t " +
             "GROUP BY t.installation.nomInstallation, t.installation.localisation")
     List<Object[]> countTicketsByInstallationWithLocation();
+
+    /*correction*/
+    long countByStatut(String statut);
+
+
+
 }
 

@@ -72,9 +72,18 @@ public class TicketService {
     }
 
     /*nouhaila*/
-    public long countTickets() {
-        return ticketRepository.count();
+    public Map<String, Long> getTicketStats() {
+        Map<String, Long> stats = new HashMap<>();
+
+        stats.put("total", ticketRepository.count());
+        stats.put("ouvert", ticketRepository.countByStatut("ouvert"));
+        stats.put("en_cours", ticketRepository.countByStatut("en cours"));
+        stats.put("resolue", ticketRepository.countByStatut("résolue"));
+        stats.put("ferme", ticketRepository.countByStatut("fermé"));
+
+        return stats;
     }
+
     public List<Object[]> getTicketCountByInstallation() {
         return ticketRepository.countTicketsByInstallation();
     }
@@ -121,6 +130,7 @@ public class TicketService {
     public List<Object[]> getTicketCountByInstallationWithLocation() {
         return ticketRepository.countTicketsByInstallationWithLocation();
     }
+
 
 }
 

@@ -20,11 +20,12 @@ public class BackendProjetTicketOcpApplication {
     CommandLineRunner initDatabase(InstallationRepository installationRepository) {
         return args -> {
             if (installationRepository.count() == 0) {
-                installationRepository.save(new Installation("Station de pompage", "Zone Nord"));
-                installationRepository.save(new Installation("Centrale électrique", "Zone Sud"));
-                installationRepository.save(new Installation("Atelier mécanique", "Zone Est"));
-                installationRepository.save(new Installation("Poste de sécurité", "Zone Ouest"));
-                installationRepository.save(new Installation("Zone de stockage", "Centre"));
+                installationRepository.save(new Installation("Site A", "Zone Nord"));
+                installationRepository.save(new Installation("Usine B", "Zone Sud"));
+                installationRepository.save(new Installation("Station C", "Zone Est"));
+                installationRepository.save(new Installation("Depot D", "Zone Ouest"));
+                installationRepository.save(new Installation("Usine E", "Centre"));
+                installationRepository.save(new Installation("Plateforme F", "Centre"));
             }
         };
     }
