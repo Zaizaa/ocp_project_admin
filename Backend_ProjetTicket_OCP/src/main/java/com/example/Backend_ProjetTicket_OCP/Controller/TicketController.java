@@ -8,6 +8,7 @@ import com.example.Backend_ProjetTicket_OCP.Service.TicketService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -48,6 +49,29 @@ public class TicketController {
     public void deleteAllTickets() {
         ticketService.deleteAllTickets();
     }
+
+    /*nouhaila*/
+    @GetMapping("/count")
+    public long getTicketCount() {
+        return ticketService.countTickets();
+    }
+    @GetMapping("/count-by-installation")
+    public List<Object[]> getTicketCountByInstallation() {
+        return ticketService.getTicketCountByInstallation();
+    }
+    @GetMapping("/percentage-by-gravite")
+    public List<Map<String, Object>> getTicketPercentageByGravite() {
+        return ticketService.getTicketPercentageByGravite();
+    }
+    @GetMapping("/percentage-by-type")
+    public List<Map<String, Object>> getTicketPercentageByType() {
+        return ticketService.getTicketPercentageByType();
+    }
+    @GetMapping("/count-by-installation-location")
+    public List<Object[]> getTicketCountByInstallationWithLocation() {
+        return ticketService.getTicketCountByInstallationWithLocation();
+    }
+
 
 
 

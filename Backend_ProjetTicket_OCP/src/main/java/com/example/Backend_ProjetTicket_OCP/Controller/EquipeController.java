@@ -1,5 +1,6 @@
 package com.example.Backend_ProjetTicket_OCP.Controller;
 
+import com.example.Backend_ProjetTicket_OCP.DTO.EquipeStatsDTO;
 import com.example.Backend_ProjetTicket_OCP.Entite.Equipe;
 import com.example.Backend_ProjetTicket_OCP.Service.EquipeService;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,15 @@ public class EquipeController {
     @DeleteMapping("/{id}")
     public void deleteEquipe(@PathVariable int id) {
         equipeService.deleteEquipe(id);
+    }
+
+    /*nouhaila*/
+    @GetMapping("/count")
+    public long getEquipeCount() {
+        return equipeService.countEquipes();
+    }
+    @GetMapping("/statistiques")
+    public List<EquipeStatsDTO> getStatistiques() {
+        return equipeService.getStatistiquesParEquipe();
     }
 }
