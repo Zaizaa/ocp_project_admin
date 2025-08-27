@@ -41,12 +41,22 @@ export default function OcpSafiImageMap() {
         className="relative w-full mx-auto rounded-lg overflow-hidden shadow"
         style={{ maxHeight: "450px" }}
       >
+        {/* Image claire */}
         <Image
           src="/maps/ocp_safi_map.png"
-          alt="Carte OCP Safi"
+          alt="Carte OCP Safi (clair)"
           width={800}
           height={600}
-          className="w-full h-auto object-contain"
+          className="w-full h-auto object-contain block dark:hidden"
+        />
+
+        {/* Image sombre */}
+        <Image
+          src="/maps/ocp_safi_map_dark.png"
+          alt="Carte OCP Safi (sombre)"
+          width={800}
+          height={600}
+          className="w-full h-auto object-contain hidden dark:block"
         />
 
         {/* Marqueurs */}
@@ -68,16 +78,22 @@ export default function OcpSafiImageMap() {
         {/* Popup info */}
         {selected && (
           <div
-            className="absolute bg-white shadow-lg p-4 rounded-lg border border-gray-300 text-sm w-48"
+            className="absolute bg-white dark:bg-gray-900 shadow-lg p-4 rounded-lg border border-gray-300 dark:border-gray-700 text-sm w-48"
             style={{
               top: selected.y,
               left: selected.x,
               transform: "translate(-50%, -120%)",
             }}
           >
-            <p className="font-bold text-gray-800">{selected.name}</p>
-            <p className="text-gray-600">📍 {selected.location}</p>
-            <p className="text-gray-600">⚠️ Incidents : {selected.incidents}</p>
+            <p className="font-bold text-gray-800 dark:text-white">
+              {selected.name}
+            </p>
+            <p className="text-gray-600 dark:text-gray-300">
+              📍 {selected.location}
+            </p>
+            <p className="text-gray-600 dark:text-gray-300">
+              ⚠️ Incidents : {selected.incidents}
+            </p>
             <button
               className="mt-2 px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600"
               onClick={() => setSelected(null)}
