@@ -3,8 +3,9 @@ import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 import { MoreDotIcon } from "@/icons";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
+import axios from "axios";
 
 // Dynamically import the ReactApexChart component
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -12,10 +13,37 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 });
 
 export default function MonthlySalesChart() {
-  const data = [12, 8, 15, 6, 10, 9]; // adapte ces valeurs selon tes stats réelles
+  const [data, setData] = useState<number[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await axios.get(
+          "http://localhost:8080/api/tickets/count-by-installation"
+        );
+        // res.data est un tableau de tableaux : [[nom, count], ...]
+        const names = res.data.map((item: [string, number]) => item[0]);
+        const counts = res.data.map((item: [string, number]) => item[1]);
+        setCategories(names);
+        setData(counts);
+      } catch (err) {
+        setError("Erreur lors du chargement des données.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   // Trouver min et max
-  const min = Math.min(...data);
-  const max = Math.max(...data);
+  const min = data.length ? Math.min(...data) : 0;
+  const max = data.length ? Math.max(...data) : 0;
 
   // Définir les couleurs : min = vert foncé, max = rouge, autres = verts
   const colors = data.map((val) =>
@@ -40,20 +68,13 @@ export default function MonthlySalesChart() {
         columnWidth: "45%",
         borderRadius: 6,
         borderRadiusApplication: "end",
-        distributed: true, // chaque barre sa couleur
+        distributed: true,
       },
     },
     dataLabels: { enabled: false },
     stroke: { show: true, width: 4, colors: ["#fff"] },
     xaxis: {
-      categories: [
-        "Site A",
-        "Usine B",
-        "Station C",
-        "Dépôt D",
-        "Site E",
-        "Plateforme F",
-      ],
+      categories,
       axisBorder: { show: false },
       axisTicks: { show: false },
       labels: { style: { colors: "#059669", fontWeight: 600 } },
@@ -67,8 +88,8 @@ export default function MonthlySalesChart() {
       labels: { style: { colors: "#059669" } },
     },
     grid: {
-      yaxis: { lines: { show: true } }, // ✅ just show lines
-      borderColor: "#bbf7d0",           // ✅ set color here
+      yaxis: { lines: { show: true } },
+      borderColor: "#bbf7d0",
     },
     fill: { opacity: 1 },
     tooltip: {
@@ -84,7 +105,6 @@ export default function MonthlySalesChart() {
       data,
     },
   ];
-  const [isOpen, setIsOpen] = useState(false);
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -127,12 +147,18 @@ export default function MonthlySalesChart() {
 
       <div className="flex-1 flex items-center">
         <div className="w-full">
-          <ReactApexChart
-            options={options}
-            series={series}
-            type="bar"
-            height={220}
-          />
+          {loading ? (
+            <div className="text-center text-gray-400">Chargement...</div>
+          ) : error ? (
+            <div className="text-center text-red-500">{error}</div>
+          ) : (
+            <ReactApexChart
+              options={options}
+              series={series}
+              type="bar"
+              height={220}
+            />
+          )}
         </div>
       </div>
     </div>
