@@ -52,40 +52,14 @@ public class InstallationController {
     //********these api will be in the tickets controller**********
 
     /*
-    @GetMapping("/count")
-    public long getTicketCount() {
-        return ticketService.countTickets();
-    }
-    @GetMapping("/tickets/count-by-installation")
-    public List<Object[]> getTicketCountByInstallation() {
-        return ticketService.getTicketCountByInstallation();
-    }
-    @GetMapping("/tickets/percentage-by-gravite")
-    public List<Map<String, Object>> getTicketPercentageByGravite() {
-        return ticketService.getTicketPercentageByGravite();
-    }
-    @GetMapping("/tickets/percentage-by-type")
-    public List<Map<String, Object>> getTicketPercentageByType() {
-        return ticketService.getTicketPercentageByType();
-    }
-    @GetMapping("/tickets/count-by-installation-location")
-    public List<Object[]> getTicketCountByInstallationWithLocation() {
-        return ticketService.getTicketCountByInstallationWithLocation();
-    }
+
 
     */
 
     //*********these api will be in the equipes controller***********
 
     /*
-    @GetMapping("/count")
-    public long getEquipeCount() {
-        return equipeService.countEquipes();
-    }
-    @GetMapping("/statistiques")
-    public List<EquipeStatsDTO> getStatistiques() {
-        return equipeService.getStatistiquesParEquipe();
-    }
+
 
      */
 

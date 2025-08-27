@@ -7,8 +7,7 @@ import com.example.Backend_ProjetTicket_OCP.Entite.Ticket;
 import com.example.Backend_ProjetTicket_OCP.Repo.TicketRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TicketService {
@@ -70,6 +69,57 @@ public class TicketService {
     }
     public void deleteAllTickets() {
         ticketRepository.deleteAll();
+    }
+
+    /*nouhaila*/
+    public long countTickets() {
+        return ticketRepository.count();
+    }
+    public List<Object[]> getTicketCountByInstallation() {
+        return ticketRepository.countTicketsByInstallation();
+    }
+    public List<Map<String, Object>> getTicketPercentageByGravite() {
+        List<Object[]> data = ticketRepository.countTicketsByGravite();
+        long total = ticketRepository.count();
+
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (Object[] row : data) {
+            String gravite = (String) row[0];
+            long count = (long) row[1];
+            double percentage = (count * 100.0) / total;
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("gravite", gravite);
+            map.put("percentage", percentage);
+
+            result.add(map);
+        }
+
+        return result;
+    }
+    public List<Map<String, Object>> getTicketPercentageByType() {
+        List<Object[]> data = ticketRepository.countTicketsByType();
+        long total = ticketRepository.count();
+
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (Object[] row : data) {
+            String type = (String) row[0];
+            long count = (long) row[1];
+            double percentage = (count * 100.0) / total;
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", type);
+            map.put("percentage", percentage);
+
+            result.add(map);
+        }
+
+        return result;
+    }
+    public List<Object[]> getTicketCountByInstallationWithLocation() {
+        return ticketRepository.countTicketsByInstallationWithLocation();
     }
 
 }
