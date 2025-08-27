@@ -9,10 +9,23 @@ import {
 } from "@/icons";
 
 export const IncidentMetrics = () => {
-  const [ticketType, setTicketType] = useState<"total" | "attente" | "encours" | "resolus">("total");
+  const [ticketType, setTicketType] = useState<"total" | "attente" | "encours" | "resolus" | "fermes">("total");
 
   // états pour les compteurs récupérés depuis le backend
-  const [ticketsCount, setTicketsCount] = useState<number | null>(null);
+  const [ticketStats, setTicketStats] = useState<{
+    total: number;
+    attente: number;
+    encours: number;
+    resolus: number;
+    fermes: number;
+  }>({
+    total: 0,
+    attente: 0,
+    encours: 0,
+    resolus: 0,
+    fermes: 0,
+  });
+
   const [equipesCount, setEquipesCount] = useState<number | null>(null);
   const [installationsCount, setInstallationsCount] = useState<number | null>(null);
 
@@ -21,7 +34,6 @@ export const IncidentMetrics = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    // baseURL vers ton backend
     const api = axios.create({
       baseURL: "http://localhost:8080",
     });
@@ -31,19 +43,25 @@ export const IncidentMetrics = () => {
         setLoading(true);
         setError(null);
 
-        // on lance les 3 requêtes en parallèle
+        // Appel des 3 endpoints en parallèle
         const [ticketsRes, equipesRes, installationsRes] = await Promise.all([
           api.get("/api/tickets/count", { signal: controller.signal }),
           api.get("/api/equipes/count", { signal: controller.signal }),
           api.get("/installations/count", { signal: controller.signal }),
         ]);
 
-        // les endpoints renvoient directement un nombre (long). On s'assure de convertir en nombre JS
-        setTicketsCount(Number(ticketsRes.data));
+        // Mapping des clés backend vers frontend
+        const stats = ticketsRes.data;
+        setTicketStats({
+          total: Number(stats.total ?? 0),
+          attente: Number(stats.ouvert ?? 0),
+          encours: Number(stats.en_cours ?? 0),
+          resolus: Number(stats.resolue ?? 0),
+          fermes: Number(stats.ferme ?? 0),
+        });
         setEquipesCount(Number(equipesRes.data));
         setInstallationsCount(Number(installationsRes.data));
       } catch (err) {
-        // si annulation, on ne fait rien
         if (axios.isCancel?.(err as any) || (err as any).name === "CanceledError") {
           return;
         }
@@ -57,24 +75,16 @@ export const IncidentMetrics = () => {
     fetchCounts();
 
     return () => {
-      // annule les requêtes si le composant est démonté
       controller.abort();
     };
   }, []);
 
-  // la carte Tickets garde les autres statiques (attente, encours, resolus)
-  const ticketStats = {
-    total: ticketsCount ?? 100, // fallback à 100 si pas encore chargé
-    attente: 25,
-    encours: 40,
-    resolus: 35,
-  };
-
   const ticketLabels = {
     total: "Tickets déclarés",
-    attente: "Tickets en attente",
+    attente: "Tickets ouverts",
     encours: "Tickets en cours",
     resolus: "Tickets résolus",
+    fermes: "Tickets fermés",
   };
 
   const colorMap = {
@@ -82,6 +92,7 @@ export const IncidentMetrics = () => {
     attente: { bgBlock: "bg-yellow-50 dark:bg-yellow-900/30", hover: "hover:bg-yellow-100 dark:hover:bg-yellow-900/50", bgIcon: "bg-yellow-100 dark:bg-yellow-800", icon: "text-yellow-700 dark:text-yellow-300" },
     encours: { bgBlock: "bg-blue-50 dark:bg-blue-900/30", hover: "hover:bg-blue-100 dark:hover:bg-blue-900/50", bgIcon: "bg-blue-100 dark:bg-blue-800", icon: "text-blue-700 dark:text-blue-300" },
     resolus: { bgBlock: "bg-purple-50 dark:bg-purple-900/30", hover: "hover:bg-purple-100 dark:hover:bg-purple-900/50", bgIcon: "bg-purple-100 dark:bg-purple-800", icon: "text-purple-700 dark:text-purple-300" },
+    fermes: { bgBlock: "bg-gray-50 dark:bg-gray-900/30", hover: "hover:bg-gray-100 dark:hover:bg-gray-900/50", bgIcon: "bg-gray-100 dark:bg-gray-800", icon: "text-gray-700 dark:text-gray-300" },
   };
 
   return (
@@ -108,12 +119,13 @@ export const IncidentMetrics = () => {
             <select
               className="rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-800 dark:text-white/90 px-3 py-1 cursor-pointer shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-green-300 transition-all"
               value={ticketType}
-              onChange={(e) => setTicketType(e.target.value as "total" | "attente" | "encours" | "resolus")}
+              onChange={(e) => setTicketType(e.target.value as "total" | "attente" | "encours" | "resolus" | "fermes")}
             >
               <option value="total">Total</option>
-              <option value="attente">En attente</option>
-              <option value="encours">En cours</option>
+              <option value="attente">En Attente</option>
+              <option value="encours">En Cours</option>
               <option value="resolus">Résolus</option>
+              <option value="fermes">Fermés</option>
             </select>
           </div>
 
@@ -122,7 +134,7 @@ export const IncidentMetrics = () => {
               {ticketLabels[ticketType]}
             </span>
             <h4 className="mt-2 font-bold text-gray-900 text-title-sm dark:text-white/90">
-              {loading && ticketType === "total" ? (
+              {loading ? (
                 <span className="inline-block animate-pulse">...</span>
               ) : (
                 ticketStats[ticketType]
